@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://script.google.com/macros/s/AKfycbz_kxz1fYCALcNIJ5CuBv6SjGKFoUVUb6UZ2qOliaqpta-5_u_AeRC7QQwx9E9nDXACpA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyu8pLNvenHqyPE0wkYQnBbFu1jb86ihHTzRq5nmC3OYk9u6MiTT0HZAhArjwpu_O7-zA/exec';
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
@@ -29,16 +29,7 @@ async function handleSendOtp() {
     }
 
     try {
-        // First, make an OPTIONS request
-        await fetch(`${API_URL}?action=sendOtp&origin=${window.location.origin}`, {
-            method: 'OPTIONS',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        // Then make the actual POST request
-        const response = await fetch(`${API_URL}?action=sendOtp&origin=${window.location.origin}`, {
+        const response = await fetch(`${API_URL}?action=sendOtp`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,6 +38,7 @@ async function handleSendOtp() {
                 email,
                 origin: window.location.origin
             }),
+            mode: 'cors'
         });
 
         const data = await response.json();
@@ -73,16 +65,7 @@ async function handleVerifyOtp() {
     }
 
     try {
-        // First, make an OPTIONS request
-        await fetch(`${API_URL}?action=verifyOtp&origin=${window.location.origin}`, {
-            method: 'OPTIONS',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        // Then make the actual POST request
-        const response = await fetch(`${API_URL}?action=verifyOtp&origin=${window.location.origin}`, {
+        const response = await fetch(`${API_URL}?action=verifyOtp`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -92,6 +75,7 @@ async function handleVerifyOtp() {
                 otp,
                 origin: window.location.origin
             }),
+            mode: 'cors'
         });
 
         const data = await response.json();
