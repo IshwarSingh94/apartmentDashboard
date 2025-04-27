@@ -1,52 +1,76 @@
+/* styles.css - Modernized and Fixed */
+
 :root {
+    /* Colors */
     --primary-color: #3B82F6; /* Slightly softer blue */
-    --primary-hover: #2563EB; /* Existing primary as hover */
-    --secondary-color: #F3F4F6; /* Keep as is */
-    --secondary-hover: #E5E7EB; /* Keep as is */
+    --primary-hover: #2563EB; /* Original primary as hover */
+    --secondary-color: #F3F4F6;
+    --secondary-hover: #E5E7EB;
     --text-primary: #111827; /* Darker gray for better contrast */
-    --text-secondary: #6B7280; /* Keep as is */
+    --text-secondary: #6B7280;
     --error-color: #EF4444; /* Slightly brighter red */
     --success-color: #10B981; /* Slightly brighter green */
     --border-color: #D1D5DB; /* Slightly darker border for definition */
-    --background-color: #F9FAFB; /* Keep as is */
-    --card-background: #FFFFFF; /* Keep as is */
+    --background-color: #F9FAFB;
+    --card-background: #FFFFFF;
+
+    /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* Softer medium shadow */
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -1px rgb(0 0 0 / 0.06);
-     /* Softer large shadow */
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -1px rgb(0 0 0 / 0.06); /* Softer medium */
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -2px rgb(0 0 0 / 0.05); /* Softer large */
+
+    /* Border Radius */
     --border-radius-sm: 4px;
-    --border-radius-md: 6px; /* Slightly softer radius */
-    --border-radius-lg: 8px; /* Keep standard radius */
+    --border-radius-md: 6px; /* Slightly softer */
+    --border-radius-lg: 8px;
+}
+
+/* Global Resets and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
     background-color: var(--background-color);
     min-height: 100vh;
-    /* Removed flex centering for normal page flow */
     color: var(--text-primary);
     line-height: 1.6; /* Slightly increased line height */
+    font-size: 16px; /* Base font size */
 }
 
 .container {
     width: 100%;
     max-width: 1200px;
     padding: 2rem; /* Use rem for scalability */
-    margin: 2rem auto; /* Add margin for spacing when not centered */
+    margin: 2rem auto; /* Add margin for spacing */
 }
 
+/* Login Container Styles */
 .login-container {
     background-color: var(--card-background);
     padding: 2.5rem; /* Use rem */
-    border-radius: var(--border-radius-lg); /* Consistent radius */
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md); /* Softer shadow */
     max-width: 450px; /* Slightly narrower */
     margin: 4rem auto; /* More margin top */
     text-align: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .company-logo {
     margin-bottom: 2.5rem; /* More spacing */
+}
+
+.logo-image {
+    max-width: 180px; /* Adjusted size */
+    height: auto;
+}
+
+.login-form {
+    text-align: left;
 }
 
 h2 {
@@ -65,8 +89,13 @@ h2 {
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Use rem */
+    gap: 1rem;
     margin-bottom: 1.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
 }
 
 .input-wrapper i {
@@ -78,15 +107,34 @@ h2 {
     font-size: 0.9em; /* Slightly smaller icon */
 }
 
-input[type="email"], input[type="text"], input[type="date"] {
+input[type="email"],
+input[type="text"] {
     width: 100%;
-    padding: 0.875rem 1rem 0.875rem 3rem; /* Adjusted padding */
+    padding: 0.875rem 1rem 0.875rem 3rem; /* Adjusted padding for icon */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md); /* Softer radius */
     font-size: 1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: #FFF; /* Ensure white background */
+    background-color: #FFF;
 }
+
+input[type="date"] { /* Specific styling for date inputs */
+    width: 100%;
+    padding: 0.75rem 1rem; /* Different padding for date */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: var(--background-color); /* Match search box background */
+    color: var(--text-primary); /* Ensure text color is set */
+    line-height: 1.5; /* Ensure consistent line height */
+}
+/* Style placeholder text */
+input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
 
 input:focus {
     outline: none;
@@ -94,9 +142,10 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Softer focus ring */
 }
 
+/* Button Styles */
 .btn {
     padding: 0.875rem 1.5rem; /* Adjusted padding */
-    border: 1px solid transparent; /* Add border for consistency */
+    border: 1px solid transparent;
     border-radius: var(--border-radius-md); /* Softer radius */
     cursor: pointer;
     font-size: 0.95rem; /* Slightly smaller text */
@@ -106,8 +155,8 @@ input:focus {
     justify-content: center;
     gap: 0.5rem;
     transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.1s ease-in-out;
-    width: 100%; /* Keep full width for form buttons */
     text-align: center;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .btn i {
@@ -118,6 +167,7 @@ input:focus {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+    width: 100%; /* Default form buttons to full width */
 }
 
 .btn.primary:hover {
@@ -129,7 +179,7 @@ input:focus {
 .btn.secondary {
     background-color: var(--secondary-color);
     color: var(--text-primary);
-    border-color: var(--border-color); /* Use border color */
+    border-color: var(--border-color);
 }
 
 .btn.secondary:hover {
@@ -137,43 +187,107 @@ input:focus {
     border-color: #adb5bd; /* Slightly darker border on hover */
 }
 
-/* Keep .btn.text as is */
+.btn.text {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    padding: 8px;
+    width: auto; /* Text buttons shouldn't be full width by default */
+}
+
+.btn.text:hover {
+    text-decoration: underline;
+    background-color: rgba(59, 130, 246, 0.05); /* Subtle hover background */
+}
+
+.btn.text:disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.btn .loading-spinner {
+    display: none; /* Hide spinner by default */
+}
+.btn.loading .button-text {
+    display: none; /* Hide text when loading */
+}
+.btn.loading .loading-spinner {
+    display: inline-block; /* Show spinner when loading */
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* OTP Section Styles */
+#otp-section h2 {
+    margin-bottom: 0.5rem;
+}
+.otp-info {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.9em;
+}
 
 .resend-otp {
-    /* Keep existing styles */
-    font-size: 0.875em; /* Slightly smaller */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875em;
+}
+
+#back-to-email.btn.secondary {
+     width: 100%; /* Make back button full width */
+     margin-top: 1rem;
 }
 
 /* Data Container Styles */
 .data-container {
     background-color: var(--card-background);
     padding: 2rem; /* Use rem */
-    border-radius: var(--border-radius-lg); /* Consistent radius */
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md); /* Softer shadow */
-    margin-top: 2rem; /* Add margin if login disappears */
+    margin-top: 2rem;
+    animation: fadeIn 0.3s ease-out;
 }
 
+/* Header Styles (Fixed) */
 .header {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem; /* Adjusted spacing */
-    gap: 1.5rem;
+    align-items: center; /* Vertically center items */
+    margin-bottom: 1.5rem;
+    gap: 1.5rem; /* Gap between items */
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border-color);
 }
 
+.header-left {
+    flex: 1 1 auto; /* Allow growing and shrinking */
+    min-width: 0; /* Prevent overflow */
+}
+
 .filter-controls {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    align-items: center;
-    gap: 1rem; /* Adjusted gap */
+    flex-wrap: wrap; /* Allow filter controls to wrap */
+    align-items: flex-end; /* Align items to the bottom */
+    gap: 1rem;
+    width: 100%;
 }
 
 .search-box {
     position: relative;
-    flex-grow: 1; /* Allow search to grow */
-    min-width: 250px; /* Minimum width */
+    flex: 1 1 250px; /* Grow/shrink, base width 250px */
+    min-width: 200px; /* Minimum width */
 }
 
 .search-box i {
@@ -182,39 +296,51 @@ input:focus {
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
+    font-size: 0.9em;
 }
 
 .search-box input {
-    padding: 0.75rem 1rem 0.75rem 2.5rem; /* Adjusted padding */
+    padding: 0.75rem 1rem 0.75rem 2.5rem; /* Adjusted padding for icon */
     width: 100%;
-    background-color: var(--background-color); /* Subtle background */
+    background-color: var(--background-color);
     border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    font-size: 0.95rem;
 }
 
 .date-filter {
     display: flex;
-    gap: 1rem; /* Adjusted gap */
-    align-items: center; /* Align items vertically */
-    flex-wrap: wrap; /* Allow wrapping */
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    flex: 1 1 auto; /* Allow date filter section to grow/shrink */
+}
+
+.date-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1 1 150px; /* Allow individual date inputs to grow/shrink */
+    min-width: 140px; /* Min width for date inputs */
 }
 
 .date-input-group label {
     font-size: 0.8em; /* Smaller label */
     color: var(--text-secondary);
     font-weight: 500;
-    margin-bottom: 0.25rem; /* Add space below label */
+    margin-bottom: 0.1rem; /* Fine-tune spacing */
 }
 
-.date-input-group input {
-    padding: 0.75rem; /* Adjusted padding */
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
+#logout.btn {
+    flex: 0 0 auto; /* Don't grow, don't shrink */
+    width: auto; /* Size based on content */
 }
 
+/* Table Styles */
 .table-container {
-    overflow-x: auto;
-    margin: 1.5rem 0; /* Adjusted margin */
-    border-radius: var(--border-radius-md); /* Consistent radius */
+    overflow-x: auto; /* Enable horizontal scroll on table */
+    margin: 1.5rem 0;
+    border-radius: var(--border-radius-md);
     border: 1px solid var(--border-color);
 }
 
@@ -228,21 +354,29 @@ th, td {
     padding: 1rem; /* Consistent padding */
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    white-space: nowrap; /* Prevent wrapping in cells */
+    white-space: nowrap; /* Prevent wrapping by default */
+    vertical-align: middle; /* Align cell content vertically */
 }
 
 th {
     background-color: #F9FAFB; /* Lighter header background */
     font-weight: 600;
-    color: var(--text-secondary); /* Subtler header text */
-    font-size: 0.875em; /* Smaller header text */
-    text-transform: uppercase; /* Uppercase for distinction */
-    letter-spacing: 0.05em; /* Add letter spacing */
+    color: var(--text-secondary);
+    font-size: 0.8em; /* Smaller header text */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    user-select: none;
 }
 
 th i {
-    margin-left: 0.5rem; /* Adjusted icon spacing */
+    margin-left: 0.5rem;
     color: var(--text-secondary);
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+th:hover i {
+    opacity: 1;
 }
 
 tbody tr {
@@ -252,14 +386,20 @@ tbody tr {
 tbody tr:hover {
     background-color: #EFF6FF; /* Subtle blue hover */
 }
+/* Remove bottom border from last row */
+tbody tr:last-child td {
+    border-bottom: none;
+}
 
 td {
     color: var(--text-primary);
-    font-size: 0.95em;
+    font-size: 0.9em;
 }
 
+/* Pagination Styles */
 .pagination {
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
     justify-content: center;
     align-items: center;
     gap: 1rem; /* Adjusted gap */
@@ -276,128 +416,20 @@ td {
     color: var(--text-secondary);
     font-weight: 500;
     font-size: 0.9em;
+    white-space: nowrap;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 992px) { /* Add a breakpoint for medium screens */
-    .filter-controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .date-filter {
-       justify-content: space-between;
-    }
-     .date-input-group {
-       flex-grow: 1;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 1rem; /* Adjust padding */
-    }
-
-    .login-container {
-        padding: 1.5rem; /* Adjust padding */
-        margin: 2rem auto;
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filter-controls {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .search-box {
-        width: 100%;
-    }
-
-    .date-filter {
-        width: 100%;
-        flex-direction: column; /* Stack dates vertically */
-        gap: 1rem;
-    }
-
-    .date-input-group {
-        width: 100%;
-    }
-     .date-input-group input {
-        width: 100%; /* Ensure date inputs take full width */
-    }
-
-    .header .btn { /* Ensure logout button is full width */
-        width: 100%;
-    }
-
-    th, td {
-        padding: 0.75rem; /* Reduce padding */
-        font-size: 0.875em; /* Smaller font on mobile */
-        white-space: normal; /* Allow text wrapping on mobile */
-    }
-
-    .pagination {
-        flex-direction: column; /* Stack pagination controls */
-        gap: 0.75rem;
-    }
-
-    .pagination .btn {
-        width: 100%; /* Make pagination buttons full width */
-    }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .login-container {
-        padding: 20px;
-    }
-
-    .header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filter-controls {
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .search-box {
-        max-width: none;
-        width: 100%;
-    }
-
-    .date-filter {
-        width: 100%;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .date-input-group {
-        width: 100%;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    th, td {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .pagination {
-        flex-direction: column;
-        gap: 8px;
-    }
+/* Error Message */
+.error-message {
+    background-color: #FEE2E2; /* Lighter red */
+    color: #B91C1C; /* Darker red text */
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    margin-top: 1.5rem;
+    text-align: center;
+    display: none; /* Hidden by default */
+    font-weight: 500;
+    border: 1px solid #FCA5A5; /* Red border */
 }
 
 /* Animation */
@@ -412,6 +444,119 @@ td {
     }
 }
 
-.login-container, .data-container {
-    animation: fadeIn 0.3s ease-out;
-} 
+/* Responsive Design */
+
+/* Medium Screens (Tablets) */
+@media (max-width: 992px) {
+    .container {
+        padding: 1.5rem;
+    }
+    .filter-controls {
+        /* Already allows wrapping, adjustments might be needed based on content */
+    }
+}
+
+/* Small Screens (Tablets/Large Phones) */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px; /* Slightly smaller base font */
+    }
+    .container {
+        padding: 1rem;
+    }
+
+    .login-container {
+        padding: 1.5rem;
+        margin: 2rem auto;
+    }
+
+    /* Header stacking */
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .header-left {
+        width: 100%;
+    }
+
+    .filter-controls {
+       gap: 1rem;
+    }
+
+    .search-box {
+        flex-basis: 100%;
+        min-width: unset;
+    }
+
+    .date-filter {
+       width: 100%;
+       justify-content: space-between;
+       flex-basis: 100%;
+    }
+
+     .date-input-group {
+       flex-grow: 1;
+       min-width: 130px; /* Adjust if needed */
+    }
+
+    #logout.btn {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    /* Table adjustments */
+    th, td {
+        padding: 0.75rem;
+        font-size: 0.85em; /* Smaller font */
+        white-space: normal; /* Allow text wrapping */
+    }
+
+     /* Pagination stacking */
+    .pagination {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .pagination .btn {
+        width: 100%;
+    }
+    #page-info {
+       order: -1; /* Move page info above buttons when stacked */
+       margin-bottom: 0.5rem;
+    }
+}
+
+/* Extra Small Screens (Phones) */
+@media (max-width: 480px) {
+     body {
+        font-size: 14px; /* Even smaller base font */
+    }
+     .container {
+        padding: 0.75rem;
+    }
+    .login-container {
+        padding: 1rem;
+        margin: 1.5rem auto;
+    }
+     h2 {
+        font-size: 1.3em;
+    }
+    .subtitle {
+        font-size: 0.9em;
+        margin-bottom: 1.5rem;
+    }
+    /* Stack date filters vertically */
+    .date-filter {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    .date-input-group {
+       width: 100%;
+       min-width: unset;
+    }
+     th, td {
+        padding: 0.6rem;
+    }
+}
