@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL'; // Replace with your deployed web app URL
+const API_URL = 'https://script.google.com/macros/s/AKfycbxXW22uVUL1jJ7pxPkDfMDsF7LlKcAcnUx-9YnCADwvrGUt2oY0fXYnCkU6XAi9Z69wgw/exec'; // Replace with your deployed web app URL
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
