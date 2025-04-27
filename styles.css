@@ -41,47 +41,62 @@ body {
 .login-container {
     background-color: var(--card-background);
     padding: 40px;
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: var(--shadow-lg);
     max-width: 500px;
     margin: 0 auto;
-}
-
-.logo {
     text-align: center;
-    margin-bottom: 30px;
 }
 
-.logo i {
-    font-size: 48px;
-    color: var(--primary-color);
-    margin-bottom: 16px;
+.company-logo {
+    margin-bottom: 40px;
 }
 
-h1 {
-    color: var(--text-primary);
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2em;
-    font-weight: 700;
+.logo-image {
+    max-width: 200px;
+    height: auto;
+}
+
+.login-form {
+    text-align: left;
 }
 
 h2 {
     color: var(--text-primary);
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.75em;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 1em;
 }
 
 .input-group {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
 }
 
 input {
-    flex: 1;
-    padding: 12px 16px;
+    width: 100%;
+    padding: 14px 16px 14px 48px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
@@ -95,7 +110,7 @@ input:focus {
 }
 
 .btn {
-    padding: 12px 24px;
+    padding: 14px 24px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -103,8 +118,10 @@ input:focus {
     font-weight: 500;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     transition: all 0.2s;
+    width: 100%;
 }
 
 .btn i {
@@ -129,9 +146,44 @@ input:focus {
     background-color: var(--secondary-hover);
 }
 
+.btn.text {
+    background: none;
+    color: var(--primary-color);
+    padding: 8px;
+}
+
+.btn.text:hover {
+    text-decoration: underline;
+}
+
+.btn.text:disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
+.loading-spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .otp-info {
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.resend-otp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
