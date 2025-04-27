@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apartment Portal - Login</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="login-container">
-            <h1>Apartment Portal</h1>
+            <div class="logo">
+                <i class="fas fa-building"></i>
+                <h1>Apartment Portal</h1>
+            </div>
             <div class="login-form">
                 <div id="email-section">
                     <h2>Enter your email</h2>
                     <div class="input-group">
                         <input type="email" id="email" placeholder="Enter your authorized email" required>
-                        <button id="send-otp" class="btn primary">Send OTP</button>
+                        <button id="send-otp" class="btn primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Send OTP
+                        </button>
                     </div>
                 </div>
                 
@@ -25,34 +32,66 @@
                     <p class="otp-info">Please check your email for the OTP</p>
                     <div class="input-group">
                         <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
-                        <button id="verify-otp" class="btn primary">Verify OTP</button>
+                        <button id="verify-otp" class="btn primary">
+                            <i class="fas fa-check"></i>
+                            Verify OTP
+                        </button>
                     </div>
-                    <button id="back-to-email" class="btn secondary">Back to Email</button>
+                    <button id="back-to-email" class="btn secondary">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Email
+                    </button>
                 </div>
             </div>
         </div>
 
         <div id="data-container" style="display: none;">
             <div class="header">
-                <h2>Member Data</h2>
-                <button id="logout" class="btn secondary">Logout</button>
+                <div class="header-left">
+                    <h2>Member Data</h2>
+                    <div class="filter-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search members...">
+                        </div>
+                        <div class="date-filter">
+                            <input type="date" id="start-date" placeholder="Start Date">
+                            <input type="date" id="end-date" placeholder="End Date">
+                        </div>
+                    </div>
+                </div>
+                <button id="logout" class="btn secondary">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
             </div>
             <div class="table-container">
                 <table id="member-table">
                     <thead>
                         <tr>
-                            <th>Member Name</th>
-                            <th>Member Email</th>
-                            <th>Purchase Date</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Amount Paid</th>
+                            <th data-sort="name">Member Name <i class="fas fa-sort"></i></th>
+                            <th data-sort="plan">Plan <i class="fas fa-sort"></i></th>
+                            <th data-sort="purchaseDate">Purchase Date <i class="fas fa-sort"></i></th>
+                            <th data-sort="startDate">Start Date <i class="fas fa-sort"></i></th>
+                            <th data-sort="endDate">End Date <i class="fas fa-sort"></i></th>
+                            <th data-sort="amountPaid">Amount Paid <i class="fas fa-sort"></i></th>
                         </tr>
                     </thead>
                     <tbody id="member-data">
                         <!-- Data will be populated here -->
                     </tbody>
                 </table>
+            </div>
+            <div class="pagination">
+                <button id="prev-page" class="btn secondary">
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <span id="page-info">Page 1 of 1</span>
+                <button id="next-page" class="btn secondary">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
 
