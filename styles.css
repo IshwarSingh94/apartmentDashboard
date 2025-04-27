@@ -238,6 +238,7 @@ input:focus {
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
+    max-width: 50%
 }
 
 .search-box input {
