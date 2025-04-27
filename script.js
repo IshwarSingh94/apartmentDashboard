@@ -1,6 +1,7 @@
 // Configuration
 const API_URL = 'https://script.google.com/macros/s/AKfycbzJMysocGG1-9wh4GtRsnUWjKLWtPNpd921TxoYWYz7U0J6hCKwx6hWveQgFTJJEsOGaA/exec';
 const ITEMS_PER_PAGE = 10;
+const RESEND_TIMEOUT = 30; // seconds
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
@@ -20,11 +21,15 @@ const endDateInput = document.getElementById('end-date');
 const prevPageButton = document.getElementById('prev-page');
 const nextPageButton = document.getElementById('next-page');
 const pageInfo = document.getElementById('page-info');
+const resendOtpButton = document.getElementById('resend-otp');
+const resendTimer = document.getElementById('resend-timer');
 
 // State
 let allMembers = [];
 let currentPage = 1;
 let currentSort = { column: 'name', direction: 'asc' };
+let resendCountdown = RESEND_TIMEOUT;
+let resendInterval = null;
 
 // Event Listeners
 sendOtpButton.addEventListener('click', handleSendOtp);
@@ -36,6 +41,7 @@ startDateInput.addEventListener('change', handleFilter);
 endDateInput.addEventListener('change', handleFilter);
 prevPageButton.addEventListener('click', () => changePage(currentPage - 1));
 nextPageButton.addEventListener('click', () => changePage(currentPage + 1));
+resendOtpButton.addEventListener('click', handleResendOtp);
 
 // Add sort listeners to table headers
 document.querySelectorAll('th[data-sort]').forEach(th => {
@@ -50,14 +56,18 @@ function handleSendOtp() {
         return;
     }
 
+    setLoading(sendOtpButton, true);
+
     // Create a unique callback name
     const callbackName = 'jsonpCallback_' + Date.now();
     
     // Create the callback function
     window[callbackName] = function(response) {
+        setLoading(sendOtpButton, false);
         if (response.status === 'success') {
             showOtpSection();
             hideError();
+            startResendTimer();
         } else {
             showError(response.message || 'Failed to send OTP');
         }
@@ -81,16 +91,20 @@ function handleVerifyOtp() {
         return;
     }
 
+    setLoading(verifyOtpButton, true);
+
     // Create a unique callback name
     const callbackName = 'jsonpCallback_' + Date.now();
     
     // Create the callback function
     window[callbackName] = function(response) {
+        setLoading(verifyOtpButton, false);
         if (response.status === 'success') {
             allMembers = response.members;
             showDataContainer();
             displayMemberData();
             hideError();
+            stopResendTimer();
         } else {
             showError(response.message || 'Invalid OTP');
         }
@@ -103,6 +117,87 @@ function handleVerifyOtp() {
     const script = document.createElement('script');
     script.src = `${API_URL}?action=verifyOtp&email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}&callback=${callbackName}`;
     document.body.appendChild(script);
+}
+
+function handleResendOtp() {
+    if (resendOtpButton.disabled) return;
+    
+    const email = emailInput.value.trim();
+    if (!email) {
+        showError('Please enter your email address');
+        return;
+    }
+
+    setLoading(resendOtpButton, true);
+
+    // Create a unique callback name
+    const callbackName = 'jsonpCallback_' + Date.now();
+    
+    // Create the callback function
+    window[callbackName] = function(response) {
+        setLoading(resendOtpButton, false);
+        if (response.status === 'success') {
+            showError('OTP resent successfully');
+            startResendTimer();
+        } else {
+            showError(response.message || 'Failed to resend OTP');
+        }
+        // Clean up
+        delete window[callbackName];
+        document.body.removeChild(script);
+    };
+
+    // Create and append the script tag
+    const script = document.createElement('script');
+    script.src = `${API_URL}?action=sendOtp&email=${encodeURIComponent(email)}&callback=${callbackName}`;
+    document.body.appendChild(script);
+}
+
+function startResendTimer() {
+    resendCountdown = RESEND_TIMEOUT;
+    resendOtpButton.disabled = true;
+    updateResendTimer();
+    
+    if (resendInterval) {
+        clearInterval(resendInterval);
+    }
+    
+    resendInterval = setInterval(() => {
+        resendCountdown--;
+        updateResendTimer();
+        
+        if (resendCountdown <= 0) {
+            stopResendTimer();
+        }
+    }, 1000);
+}
+
+function stopResendTimer() {
+    if (resendInterval) {
+        clearInterval(resendInterval);
+        resendInterval = null;
+    }
+    resendOtpButton.disabled = false;
+    resendTimer.textContent = '';
+}
+
+function updateResendTimer() {
+    resendTimer.textContent = `(${resendCountdown}s)`;
+}
+
+function setLoading(button, isLoading) {
+    const buttonText = button.querySelector('.button-text');
+    const spinner = button.querySelector('.loading-spinner');
+    
+    if (isLoading) {
+        buttonText.style.display = 'none';
+        spinner.style.display = 'inline-block';
+        button.disabled = true;
+    } else {
+        buttonText.style.display = 'inline-block';
+        spinner.style.display = 'none';
+        button.disabled = false;
+    }
 }
 
 function displayMemberData() {
