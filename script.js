@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://script.google.com/macros/s/AKfycbxLAcqjPO5DAaPtYEKKIPpBhcbivxXti7jdJ9IhAl1oxYcn6re-Pc8XpEgKdc_piVJ8iw/exec'; // Replace with your deployed web app URL
+const API_URL = 'https://script.google.com/macros/s/AKfycbxLAcqjPO5DAaPtYEKKIPpBhcbivxXti7jdJ9IhAl1oxYcn6re-Pc8XpEgKdc_piVJ8iw/exec';
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
@@ -29,12 +29,24 @@ async function handleSendOtp() {
     }
 
     try {
-        const response = await fetch(`${API_URL}?action=sendOtp`, {
+        // First, make an OPTIONS request
+        await fetch(`${API_URL}?action=sendOtp&origin=${window.location.origin}`, {
+            method: 'OPTIONS',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        // Then make the actual POST request
+        const response = await fetch(`${API_URL}?action=sendOtp&origin=${window.location.origin}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ 
+                email,
+                origin: window.location.origin
+            }),
         });
 
         const data = await response.json();
@@ -61,12 +73,25 @@ async function handleVerifyOtp() {
     }
 
     try {
-        const response = await fetch(`${API_URL}?action=verifyOtp`, {
+        // First, make an OPTIONS request
+        await fetch(`${API_URL}?action=verifyOtp&origin=${window.location.origin}`, {
+            method: 'OPTIONS',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        // Then make the actual POST request
+        const response = await fetch(`${API_URL}?action=verifyOtp&origin=${window.location.origin}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, otp }),
+            body: JSON.stringify({ 
+                email, 
+                otp,
+                origin: window.location.origin
+            }),
         });
 
         const data = await response.json();
