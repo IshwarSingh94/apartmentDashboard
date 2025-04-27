@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Portal - Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <h1>Apartment Portal</h1>
+            <div class="login-form">
+                <div id="email-section">
+                    <h2>Enter your email</h2>
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Enter your authorized email" required>
+                        <button id="send-otp" class="btn primary">Send OTP</button>
+                    </div>
+                </div>
+                
+                <div id="otp-section" style="display: none;">
+                    <h2>Enter OTP</h2>
+                    <p class="otp-info">Please check your email for the OTP</p>
+                    <div class="input-group">
+                        <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
+                        <button id="verify-otp" class="btn primary">Verify OTP</button>
+                    </div>
+                    <button id="back-to-email" class="btn secondary">Back to Email</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="data-container" style="display: none;">
+            <div class="header">
+                <h2>Member Data</h2>
+                <button id="logout" class="btn secondary">Logout</button>
+            </div>
+            <div class="table-container">
+                <table id="member-table">
+                    <thead>
+                        <tr>
+                            <th>Member Name</th>
+                            <th>Member Email</th>
+                            <th>Purchase Date</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Amount Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody id="member-data">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
