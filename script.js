@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://script.google.com/macros/s/AKfycbyUb-G0J4Ylrf5GYHyh8-QfMi_gktDMTzNHXMPm22kug48oJnIcnr2lZDm8BhxsSy5CVQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzJMysocGG1-9wh4GtRsnUWjKLWtPNpd921TxoYWYz7U0J6hCKwx6hWveQgFTJJEsOGaA/exec';
 const ITEMS_PER_PAGE = 10;
 
 // DOM Elements
