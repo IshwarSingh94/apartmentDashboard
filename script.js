@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://script.google.com/macros/s/AKfycbxLAcqjPO5DAaPtYEKKIPpBhcbivxXti7jdJ9IhAl1oxYcn6re-Pc8XpEgKdc_piVJ8iw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbz_kxz1fYCALcNIJ5CuBv6SjGKFoUVUb6UZ2qOliaqpta-5_u_AeRC7QQwx9E9nDXACpA/exec';
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
