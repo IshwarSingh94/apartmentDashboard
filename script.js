@@ -1,5 +1,6 @@
 // Configuration
 const API_URL = 'https://script.google.com/macros/s/AKfycbyUb-G0J4Ylrf5GYHyh8-QfMi_gktDMTzNHXMPm22kug48oJnIcnr2lZDm8BhxsSy5CVQ/exec';
+const ITEMS_PER_PAGE = 10;
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
@@ -13,12 +14,33 @@ const verifyOtpButton = document.getElementById('verify-otp');
 const backToEmailButton = document.getElementById('back-to-email');
 const logoutButton = document.getElementById('logout');
 const memberDataTable = document.getElementById('member-data');
+const searchInput = document.getElementById('search-input');
+const startDateInput = document.getElementById('start-date');
+const endDateInput = document.getElementById('end-date');
+const prevPageButton = document.getElementById('prev-page');
+const nextPageButton = document.getElementById('next-page');
+const pageInfo = document.getElementById('page-info');
+
+// State
+let allMembers = [];
+let currentPage = 1;
+let currentSort = { column: 'name', direction: 'asc' };
 
 // Event Listeners
 sendOtpButton.addEventListener('click', handleSendOtp);
 verifyOtpButton.addEventListener('click', handleVerifyOtp);
 backToEmailButton.addEventListener('click', showEmailSection);
 logoutButton.addEventListener('click', handleLogout);
+searchInput.addEventListener('input', handleFilter);
+startDateInput.addEventListener('change', handleFilter);
+endDateInput.addEventListener('change', handleFilter);
+prevPageButton.addEventListener('click', () => changePage(currentPage - 1));
+nextPageButton.addEventListener('click', () => changePage(currentPage + 1));
+
+// Add sort listeners to table headers
+document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => handleSort(th.dataset.sort));
+});
 
 // Functions
 function handleSendOtp() {
@@ -65,8 +87,9 @@ function handleVerifyOtp() {
     // Create the callback function
     window[callbackName] = function(response) {
         if (response.status === 'success') {
+            allMembers = response.members;
             showDataContainer();
-            displayMemberData(response.members);
+            displayMemberData();
             hideError();
         } else {
             showError(response.message || 'Invalid OTP');
@@ -82,14 +105,18 @@ function handleVerifyOtp() {
     document.body.appendChild(script);
 }
 
-function displayMemberData(members) {
+function displayMemberData() {
+    const filteredMembers = filterMembers();
+    const sortedMembers = sortMembers(filteredMembers);
+    const paginatedMembers = paginateMembers(sortedMembers);
+    
     memberDataTable.innerHTML = '';
     
-    members.forEach(member => {
+    paginatedMembers.forEach(member => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${member.name}</td>
-            <td>${member.email}</td>
+            <td>${member.plan || '-'}</td>
             <td>${formatDate(member.purchaseDate)}</td>
             <td>${formatDate(member.startDate)}</td>
             <td>${formatDate(member.endDate)}</td>
@@ -97,6 +124,94 @@ function displayMemberData(members) {
         `;
         memberDataTable.appendChild(row);
     });
+
+    updatePagination(filteredMembers.length);
+}
+
+function filterMembers() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
+    const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+
+    return allMembers.filter(member => {
+        const matchesSearch = member.name.toLowerCase().includes(searchTerm) ||
+                            (member.plan && member.plan.toLowerCase().includes(searchTerm));
+        
+        const purchaseDate = new Date(member.purchaseDate);
+        const matchesDateRange = (!startDate || purchaseDate >= startDate) &&
+                               (!endDate || purchaseDate <= endDate);
+
+        return matchesSearch && matchesDateRange;
+    });
+}
+
+function sortMembers(members) {
+    return [...members].sort((a, b) => {
+        const aValue = a[currentSort.column];
+        const bValue = b[currentSort.column];
+        
+        if (currentSort.column === 'amountPaid') {
+            return currentSort.direction === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+        
+        if (currentSort.column.includes('Date')) {
+            const aDate = new Date(aValue);
+            const bDate = new Date(bValue);
+            return currentSort.direction === 'asc' ? aDate - bDate : bDate - aDate;
+        }
+        
+        const comparison = String(aValue).localeCompare(String(bValue));
+        return currentSort.direction === 'asc' ? comparison : -comparison;
+    });
+}
+
+function paginateMembers(members) {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return members.slice(start, start + ITEMS_PER_PAGE);
+}
+
+function handleSort(column) {
+    if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+    }
+    
+    // Update sort icons
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        const icon = th.querySelector('i');
+        if (th.dataset.sort === column) {
+            icon.className = currentSort.direction === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
+        } else {
+            icon.className = 'fas fa-sort';
+        }
+    });
+    
+    displayMemberData();
+}
+
+function handleFilter() {
+    currentPage = 1;
+    displayMemberData();
+}
+
+function changePage(page) {
+    const filteredMembers = filterMembers();
+    const maxPage = Math.ceil(filteredMembers.length / ITEMS_PER_PAGE);
+    
+    if (page >= 1 && page <= maxPage) {
+        currentPage = page;
+        displayMemberData();
+    }
+}
+
+function updatePagination(totalItems) {
+    const maxPage = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    pageInfo.textContent = `Page ${currentPage} of ${maxPage}`;
+    
+    prevPageButton.disabled = currentPage === 1;
+    nextPageButton.disabled = currentPage === maxPage;
 }
 
 function formatDate(dateString) {
@@ -145,4 +260,10 @@ function handleLogout() {
     emailInput.value = '';
     otpInput.value = '';
     hideError();
+    allMembers = [];
+    currentPage = 1;
+    currentSort = { column: 'name', direction: 'asc' };
+    searchInput.value = '';
+    startDateInput.value = '';
+    endDateInput.value = '';
 } 
