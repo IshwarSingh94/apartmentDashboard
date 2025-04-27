@@ -209,7 +209,7 @@ input:focus {
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 24px;
     gap: 20px;
 }
@@ -220,15 +220,16 @@ input:focus {
 
 .filter-controls {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     gap: 16px;
-    margin-top: 16px;
-    flex-wrap: wrap;
+    width: 100%;
 }
 
 .search-box {
     position: relative;
     flex: 1;
-    min-width: 200px;
+    max-width: 400px;
 }
 
 .search-box i {
@@ -247,6 +248,7 @@ input:focus {
 .date-filter {
     display: flex;
     gap: 8px;
+    align-items: center;
 }
 
 .date-filter input {
@@ -320,11 +322,13 @@ tr:hover {
         flex-direction: column;
     }
 
-    .search-box, .date-filter {
+    .search-box {
+        max-width: none;
         width: 100%;
     }
 
     .date-filter {
+        width: 100%;
         flex-direction: column;
     }
 
