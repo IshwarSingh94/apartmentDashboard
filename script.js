@@ -1,5 +1,5 @@
 // Configuration
-const API_URL = 'https://script.google.com/macros/s/AKfycbyu8pLNvenHqyPE0wkYQnBbFu1jb86ihHTzRq5nmC3OYk9u6MiTT0HZAhArjwpu_O7-zA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyUb-G0J4Ylrf5GYHyh8-QfMi_gktDMTzNHXMPm22kug48oJnIcnr2lZDm8BhxsSy5CVQ/exec';
 
 // DOM Elements
 const emailSection = document.getElementById('email-section');
@@ -21,41 +21,36 @@ backToEmailButton.addEventListener('click', showEmailSection);
 logoutButton.addEventListener('click', handleLogout);
 
 // Functions
-async function handleSendOtp() {
+function handleSendOtp() {
     const email = emailInput.value.trim();
     if (!email) {
         showError('Please enter your email address');
         return;
     }
 
-    try {
-        const response = await fetch(`${API_URL}?action=sendOtp`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                email,
-                origin: window.location.origin
-            }),
-            mode: 'cors'
-        });
-
-        const data = await response.json();
-        
-        if (data.status === 'success') {
+    // Create a unique callback name
+    const callbackName = 'jsonpCallback_' + Date.now();
+    
+    // Create the callback function
+    window[callbackName] = function(response) {
+        if (response.status === 'success') {
             showOtpSection();
             hideError();
         } else {
-            showError(data.message || 'Failed to send OTP');
+            showError(response.message || 'Failed to send OTP');
         }
-    } catch (error) {
-        showError('An error occurred. Please try again.');
-        console.error('Error:', error);
-    }
+        // Clean up
+        delete window[callbackName];
+        document.body.removeChild(script);
+    };
+
+    // Create and append the script tag
+    const script = document.createElement('script');
+    script.src = `${API_URL}?action=sendOtp&email=${encodeURIComponent(email)}&callback=${callbackName}`;
+    document.body.appendChild(script);
 }
 
-async function handleVerifyOtp() {
+function handleVerifyOtp() {
     const email = emailInput.value.trim();
     const otp = otpInput.value.trim();
     
@@ -64,33 +59,27 @@ async function handleVerifyOtp() {
         return;
     }
 
-    try {
-        const response = await fetch(`${API_URL}?action=verifyOtp`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                email, 
-                otp,
-                origin: window.location.origin
-            }),
-            mode: 'cors'
-        });
-
-        const data = await response.json();
-        
-        if (data.status === 'success') {
+    // Create a unique callback name
+    const callbackName = 'jsonpCallback_' + Date.now();
+    
+    // Create the callback function
+    window[callbackName] = function(response) {
+        if (response.status === 'success') {
             showDataContainer();
-            displayMemberData(data.members);
+            displayMemberData(response.members);
             hideError();
         } else {
-            showError(data.message || 'Invalid OTP');
+            showError(response.message || 'Invalid OTP');
         }
-    } catch (error) {
-        showError('An error occurred. Please try again.');
-        console.error('Error:', error);
-    }
+        // Clean up
+        delete window[callbackName];
+        document.body.removeChild(script);
+    };
+
+    // Create and append the script tag
+    const script = document.createElement('script');
+    script.src = `${API_URL}?action=verifyOtp&email=${encodeURIComponent(email)}&otp=${encodeURIComponent(otp)}&callback=${callbackName}`;
+    document.body.appendChild(script);
 }
 
 function displayMemberData(members) {
