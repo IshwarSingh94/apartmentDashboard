@@ -141,7 +141,7 @@ input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0
     max-height: 40px; /* Adjust as needed */
     width: auto;
     display: block;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 /* Ensure logout button height matches inputs */
