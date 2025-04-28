@@ -41,21 +41,33 @@ body {
     font-size: 16px;
 }
 
-/* Container Visibility */
+/* Container Styles */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+    margin: 2rem auto;
+}
+
+/* Login Container Styles */
 .login-container {
-    display: none;
+    background-color: var(--card-background);
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    max-width: 450px;
+    margin: 4rem auto;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
 }
 
-.login-container.active {
-    display: block;
-}
-
+/* Data Container Styles */
 .data-container {
-    display: none;
-}
-
-.data-container.active {
-    display: block;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    margin-top: 2rem;
 }
 
 /* Navbar Styles */
@@ -69,6 +81,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    margin-bottom: 2rem;
 }
 
 .navbar-logo {
@@ -108,25 +121,6 @@ body {
 #logout.btn:hover {
     background-color: var(--secondary-hover);
     border-color: #adb5bd;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 2rem;
-    margin: 2rem auto;
-}
-
-/* Login Container Styles */
-.login-container {
-    background-color: var(--card-background);
-    padding: 2.5rem;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    max-width: 450px;
-    margin: 4rem auto;
-    text-align: center;
-    animation: fadeIn 0.3s ease-out;
 }
 
 .company-logo {
@@ -310,15 +304,6 @@ input:focus {
 #back-to-email.btn.secondary {
     width: 100%;
     margin-top: 1rem;
-}
-
-/* Data Container Styles */
-.data-container {
-    background-color: var(--card-background);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    padding: 2rem;
-    margin-top: 2rem;
 }
 
 /* Header Styles */
