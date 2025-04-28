@@ -2,26 +2,26 @@
 
 :root {
     /* Colors */
-    --primary-color: #3B82F6; /* Slightly softer blue */
-    --primary-hover: #2563EB; /* Original primary as hover */
+    --primary-color: #3B82F6;
+    --primary-hover: #2563EB;
     --secondary-color: #F3F4F6;
     --secondary-hover: #E5E7EB;
-    --text-primary: #111827; /* Darker gray for better contrast */
+    --text-primary: #111827;
     --text-secondary: #6B7280;
-    --error-color: #EF4444; /* Slightly brighter red */
-    --success-color: #10B981; /* Slightly brighter green */
-    --border-color: #D1D5DB; /* Slightly darker border for definition */
+    --error-color: #EF4444;
+    --success-color: #10B981;
+    --border-color: #D1D5DB;
     --background-color: #F9FAFB;
     --card-background: #FFFFFF;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -1px rgb(0 0 0 / 0.06); /* Softer medium */
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -2px rgb(0 0 0 / 0.05); /* Softer large */
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.06), 0 2px 4px -1px rgb(0 0 0 / 0.06);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -2px rgb(0 0 0 / 0.05);
 
     /* Border Radius */
     --border-radius-sm: 4px;
-    --border-radius-md: 6px; /* Slightly softer */
+    --border-radius-md: 6px;
     --border-radius-lg: 8px;
 }
 
@@ -37,35 +37,104 @@ body {
     background-color: var(--background-color);
     min-height: 100vh;
     color: var(--text-primary);
-    line-height: 1.6; /* Slightly increased line height */
-    font-size: 16px; /* Base font size */
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* Container Visibility */
+.login-container {
+    display: none;
+}
+
+.login-container.active {
+    display: block;
+}
+
+.data-container {
+    display: none;
+}
+
+.data-container.active {
+    display: block;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--card-background);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar-logo img {
+    height: 40px;
+    width: auto;
+}
+
+.navbar-logo h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#logout.btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#logout.btn:hover {
+    background-color: var(--secondary-hover);
+    border-color: #adb5bd;
 }
 
 .container {
     width: 100%;
     max-width: 1200px;
-    padding: 2rem; /* Use rem for scalability */
-    margin: 2rem auto; /* Add margin for spacing */
+    padding: 2rem;
+    margin: 2rem auto;
 }
 
 /* Login Container Styles */
 .login-container {
     background-color: var(--card-background);
-    padding: 2.5rem; /* Use rem */
+    padding: 2.5rem;
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md); /* Softer shadow */
-    max-width: 450px; /* Slightly narrower */
-    margin: 4rem auto; /* More margin top */
+    box-shadow: var(--shadow-md);
+    max-width: 450px;
+    margin: 4rem auto;
     text-align: center;
     animation: fadeIn 0.3s ease-out;
 }
 
 .company-logo {
-    margin-bottom: 2.5rem; /* More spacing */
+    margin-bottom: 2.5rem;
 }
 
 .logo-image {
-    max-width: 180px; /* Adjusted size */
+    max-width: 180px;
     height: auto;
 }
 
@@ -76,16 +145,17 @@ body {
 h2 {
     color: var(--text-primary);
     margin-bottom: 0.5rem;
-    font-size: 1.5em; /* Slightly smaller */
-    font-weight: 600; /* Less heavy */
+    font-size: 1.5em;
+    font-weight: 600;
 }
 
 .subtitle {
     color: var(--text-secondary);
-    margin-bottom: 2rem; /* More spacing */
+    margin-bottom: 2rem;
     font-size: 0.95em;
 }
 
+/* Form Input Styles */
 .input-group {
     display: flex;
     flex-direction: column;
@@ -100,74 +170,69 @@ h2 {
 
 .input-wrapper i {
     position: absolute;
-    left: 1rem; /* Use rem */
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
-    font-size: 0.9em; /* Slightly smaller icon */
+    font-size: 0.9em;
 }
 
 input[type="email"],
-input[type="text"] {
+input[type="text"],
+input[type="date"] {
     width: 100%;
-    padding: 0.875rem 1rem 0.875rem 3rem; /* Adjusted padding for icon */
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md); /* Softer radius */
-    font-size: 1rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: #FFF;
-}
-
-input[type="date"] { /* Specific styling for date inputs */
-    width: 100%;
-    padding: 0.75rem 1rem; /* Different padding for date */
+    padding: 0.875rem 1rem 0.875rem 3rem;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     font-size: 1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
-    background-color: var(--background-color); /* Match search box background */
-    color: var(--text-primary); /* Ensure text color is set */
-    line-height: 1.5; /* Ensure consistent line height */
-}
-/* Style placeholder text */
-input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.7;
+    background-color: #FFF;
+    color: var(--text-primary);
+    line-height: 1.5;
 }
 
+input[type="date"] {
+    padding: 0.75rem 1rem;
+    background-color: var(--background-color);
+}
+
+input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
 
 input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Softer focus ring */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 /* Button Styles */
 .btn {
-    padding: 0.875rem 1.5rem; /* Adjusted padding */
+    padding: 0.875rem 1.5rem;
     border: 1px solid transparent;
-    border-radius: var(--border-radius-md); /* Softer radius */
+    border-radius: var(--border-radius-md);
     cursor: pointer;
-    font-size: 0.95rem; /* Slightly smaller text */
+    font-size: 0.95rem;
     font-weight: 500;
-    display: inline-flex; /* Use inline-flex for better alignment */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
     text-align: center;
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: nowrap;
 }
 
 .btn i {
-    font-size: 1.1em; /* Adjust icon size relative to button text */
+    font-size: 1.1em;
 }
 
 .btn.primary {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    width: 100%; /* Default form buttons to full width */
+    width: 100%;
 }
 
 .btn.primary:hover {
@@ -184,7 +249,7 @@ input:focus {
 
 .btn.secondary:hover {
     background-color: var(--secondary-hover);
-    border-color: #adb5bd; /* Slightly darker border on hover */
+    border-color: #adb5bd;
 }
 
 .btn.text {
@@ -192,12 +257,12 @@ input:focus {
     border: none;
     color: var(--primary-color);
     padding: 8px;
-    width: auto; /* Text buttons shouldn't be full width by default */
+    width: auto;
 }
 
 .btn.text:hover {
     text-decoration: underline;
-    background-color: rgba(59, 130, 246, 0.05); /* Subtle hover background */
+    background-color: rgba(59, 130, 246, 0.05);
 }
 
 .btn.text:disabled {
@@ -207,27 +272,25 @@ input:focus {
     background-color: transparent;
 }
 
+/* Loading State Styles */
 .btn .loading-spinner {
-    display: none; /* Hide spinner by default */
+    display: none;
 }
+
 .btn.loading .button-text {
-    display: none; /* Hide text when loading */
+    display: none;
 }
+
 .btn.loading .loading-spinner {
-    display: inline-block; /* Show spinner when loading */
+    display: inline-block;
     animation: spin 1s linear infinite;
 }
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 
 /* OTP Section Styles */
 #otp-section h2 {
     margin-bottom: 0.5rem;
 }
+
 .otp-info {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
@@ -245,202 +308,168 @@ input:focus {
 }
 
 #back-to-email.btn.secondary {
-     width: 100%; /* Make back button full width */
-     margin-top: 1rem;
+    width: 100%;
+    margin-top: 1rem;
 }
 
 /* Data Container Styles */
 .data-container {
     background-color: var(--card-background);
-    padding: 2rem; /* Use rem */
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md); /* Softer shadow */
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
     margin-top: 2rem;
-    animation: fadeIn 0.3s ease-out;
-    height: calc(100vh - 2rem);
-    display: flex;
-    flex-direction: column;
 }
 
-/* Header Styles (Fixed) */
+/* Header Styles */
 .header {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping */
     justify-content: space-between;
-    align-items: center; /* Vertically center items */
-    margin-bottom: 1.5rem;
-    gap: 1.5rem; /* Gap between items */
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 .header-left {
-    flex: 1 1 auto; /* Allow growing and shrinking */
-    min-width: 0; /* Prevent overflow */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
+/* Filter Controls */
 .filter-controls {
     display: flex;
-    flex-wrap: wrap; /* Allow filter controls to wrap */
-    align-items: flex-end; /* Align items to the bottom */
     gap: 1rem;
-    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
 }
 
 .search-box {
     position: relative;
-    flex: 1 1 250px; /* Grow/shrink, base width 250px */
-    min-width: 200px; /* Minimum width */
+    flex: 1;
+    min-width: 200px;
 }
 
 .search-box i {
     position: absolute;
-    left: 0.875rem; /* Adjusted position */
+    left: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-secondary);
-    font-size: 0.9em;
 }
 
 .search-box input {
-    padding: 0.75rem 1rem 0.75rem 2.5rem; /* Adjusted padding for icon */
     width: 100%;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
     border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
     font-size: 0.95rem;
 }
 
 .date-filter {
     display: flex;
-    flex-wrap: wrap;
     gap: 1rem;
-    align-items: flex-end;
-    flex: 1 1 auto; /* Allow date filter section to grow/shrink */
+    flex-wrap: wrap;
 }
 
 .date-input-group {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
-    flex: 1 1 150px; /* Allow individual date inputs to grow/shrink */
-    min-width: 140px; /* Min width for date inputs */
+    gap: 0.5rem;
 }
 
 .date-input-group label {
-    font-size: 0.8em; /* Smaller label */
+    font-size: 0.875rem;
     color: var(--text-secondary);
-    font-weight: 500;
-    margin-bottom: 0.1rem; /* Fine-tune spacing */
-}
-
-#logout.btn {
-    flex: 0 0 auto; /* Don't grow, don't shrink */
-    width: auto; /* Size based on content */
 }
 
 /* Table Styles */
 .table-container {
-    flex: 1;
-    overflow: auto;
-    margin: 0;
-    border: none;
-    border-radius: 0;
+    overflow-x: auto;
+    margin-top: 1.5rem;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: var(--card-background);
+    margin-top: 1rem;
 }
 
 th, td {
-    padding: 1rem; /* Consistent padding */
+    padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    white-space: nowrap; /* Prevent wrapping by default */
-    vertical-align: middle; /* Align cell content vertically */
 }
 
 th {
-    background-color: #F9FAFB; /* Lighter header background */
+    background-color: var(--secondary-color);
     font-weight: 600;
-    color: var(--text-secondary);
-    font-size: 0.8em; /* Smaller header text */
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    user-select: none;
+    color: var(--text-primary);
+    position: relative;
 }
 
 th i {
     margin-left: 0.5rem;
     color: var(--text-secondary);
-    opacity: 0.6;
-    transition: opacity 0.2s;
+    transition: color 0.2s;
 }
+
 th:hover i {
-    opacity: 1;
+    color: var(--primary-color);
 }
 
 tbody tr {
-    transition: background-color 0.15s ease-in-out;
+    transition: background-color 0.2s;
 }
 
 tbody tr:hover {
-    background-color: #EFF6FF; /* Subtle blue hover */
+    background-color: var(--secondary-color);
 }
-/* Remove bottom border from last row */
+
 tbody tr:last-child td {
     border-bottom: none;
 }
 
 td {
     color: var(--text-primary);
-    font-size: 0.9em;
+    font-size: 0.95rem;
 }
 
 /* Pagination Styles */
 .pagination {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
     justify-content: center;
     align-items: center;
-    gap: 1rem; /* Adjusted gap */
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
+    gap: 0.5rem;
+    margin-top: 2rem;
 }
 
 .pagination .btn {
-    width: auto; /* Allow pagination buttons to size naturally */
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
 }
 
 #page-info {
     color: var(--text-secondary);
-    font-weight: 500;
-    font-size: 0.9em;
-    white-space: nowrap;
+    font-size: 0.875rem;
+    margin: 0 1rem;
 }
 
-/* Error Message */
+/* Error Message Styles */
 .error-message {
-    background-color: #FEE2E2; /* Lighter red */
-    color: #B91C1C; /* Darker red text */
+    color: var(--error-color);
+    background-color: rgba(239, 68, 68, 0.1);
     padding: 1rem;
     border-radius: var(--border-radius-md);
-    margin-top: 1.5rem;
-    text-align: center;
-    display: none; /* Hidden by default */
-    font-weight: 500;
-    border: 1px solid #FCA5A5; /* Red border */
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
 }
 
-/* Animation */
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
@@ -448,250 +477,136 @@ td {
     }
 }
 
-/* Responsive Design */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-/* Medium Screens (Tablets) */
+/* Responsive Styles */
 @media (max-width: 992px) {
     .container {
         padding: 1.5rem;
     }
+    
     .filter-controls {
-        /* Already allows wrapping, adjustments might be needed based on content */
+        flex-direction: column;
     }
 }
 
-/* Small Screens (Tablets/Large Phones) */
 @media (max-width: 768px) {
     body {
-        font-size: 15px; /* Slightly smaller base font */
+        font-size: 14px;
     }
+    
     .container {
         padding: 1rem;
+        margin: 1rem auto;
     }
-
+    
     .login-container {
-        padding: 1.5rem;
+        padding: 2rem;
         margin: 2rem auto;
     }
-
-    /* Header stacking */
+    
     .header {
         flex-direction: column;
-        align-items: stretch;
+        gap: 1rem;
     }
-
+    
     .header-left {
         width: 100%;
     }
-
+    
     .filter-controls {
-       gap: 1rem;
+        width: 100%;
     }
-
+    
     .search-box {
-        flex-basis: 100%;
-        min-width: unset;
+        width: 100%;
     }
-
+    
     .date-filter {
-       width: 100%;
-       justify-content: space-between;
-       flex-basis: 100%;
+        width: 100%;
     }
-
-     .date-input-group {
-       flex-grow: 1;
-       min-width: 130px; /* Adjust if needed */
+    
+    .date-input-group {
+        width: 100%;
     }
-
+    
     #logout.btn {
         width: 100%;
-        margin-top: 1rem;
     }
-
-    /* Table adjustments */
+    
     th, td {
         padding: 0.75rem;
-        font-size: 0.85em; /* Smaller font */
-        white-space: normal; /* Allow text wrapping */
+        font-size: 0.9rem;
     }
-
-     /* Pagination stacking */
+    
     .pagination {
-        flex-direction: column;
-        gap: 0.75rem;
+        flex-wrap: wrap;
     }
-
+    
     .pagination .btn {
-        width: 100%;
+        min-width: 35px;
+        height: 35px;
     }
+    
     #page-info {
-       order: -1; /* Move page info above buttons when stacked */
-       margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: center;
+        margin: 0.5rem 0;
     }
-
-    /* Navigation Bar adjustments */
+    
     .navbar {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0.75rem;
+        padding: 0.75rem 1rem;
     }
-
-    .nav-left {
-        width: 100%;
+    
+    .navbar-logo img {
+        height: 32px;
     }
-
-    .filter-controls {
-        flex-direction: column;
-        gap: 0.75rem;
+    
+    .navbar-logo h1 {
+        font-size: 1.1rem;
     }
-
-    .search-box {
-        max-width: none;
-        width: 100%;
-    }
-
-    .date-filter {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .date-input-group {
-        flex: 1;
-    }
-
+    
     #logout.btn {
-        width: 100%;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
     }
 }
 
-/* Extra Small Screens (Phones) */
 @media (max-width: 480px) {
-     body {
-        font-size: 14px; /* Even smaller base font */
+    body {
+        font-size: 13px;
     }
-     .container {
+    
+    .container {
         padding: 0.75rem;
     }
+    
     .login-container {
-        padding: 1rem;
+        padding: 1.5rem;
         margin: 1.5rem auto;
     }
-     h2 {
+    
+    h2 {
         font-size: 1.3em;
     }
+    
     .subtitle {
         font-size: 0.9em;
-        margin-bottom: 1.5rem;
     }
-    /* Stack date filters vertically */
+    
     .date-filter {
         flex-direction: column;
-        align-items: stretch;
-        gap: 0.75rem;
     }
-    .date-input-group {
-       width: 100%;
-       min-width: unset;
-    }
-     th, td {
-        padding: 0.6rem;
-    }
-
-    /* Navigation Bar adjustments */
-    .navbar {
-        padding: 0.5rem;
-    }
-
-    .date-filter {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
+    
     .date-input-group {
         width: 100%;
     }
-}
-
-/* Navigation Bar Styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: var(--card-background);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow-sm);
-}
-
-.nav-left {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-.filter-controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-}
-
-.search-box {
-    position: relative;
-    flex: 1;
-    max-width: 300px;
-}
-
-.search-box i {
-    position: absolute;
-    left: 0.875rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    font-size: 0.9em;
-}
-
-.search-box input {
-    padding: 0.5rem 1rem 0.5rem 2.5rem;
-    width: 100%;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    font-size: 0.95rem;
-}
-
-.date-filter {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-.date-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.date-input-group label {
-    font-size: 0.75em;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.date-input-group input {
-    padding: 0.5rem;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    font-size: 0.9rem;
-}
-
-#logout.btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    white-space: nowrap;
+    
+    th, td {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
 }
