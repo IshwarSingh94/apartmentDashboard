@@ -1,60 +1,72 @@
 # Apartment Portal
 
-A secure web portal for partner apartment complexes to view their member data.
-
-## Overview
-
-This portal allows authorized representatives from partner apartment complexes to securely access member data specific to their complex. The system uses email-based authentication with One-Time Password (OTP) verification.
+A web application for managing apartment member data.
 
 ## Features
 
-- Secure email + OTP authentication
-- View-only access to member data
-- Data filtering by apartment complex
-- Clean and intuitive user interface
+- User authentication
+- Member data management
+- Responsive design
+- Data sorting and filtering
+- Pagination
 
-## Technical Stack
+## Setup
 
-- Frontend: HTML5, CSS3, JavaScript (ES6+)
-- Backend: Google Apps Script
-- Database: Google Sheets
-- Hosting: Google Apps Script Web App
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/apartment-portal.git
+cd apartment-portal
+```
 
-## Setup Instructions
+2. Open the project in your preferred code editor.
 
-1. Create a Google Sheet with two sheets:
-   - `Member Data`: Contains member information
-   - `Partner Access`: Contains authorized partner emails and their associated complexes
+3. Make sure you have the following files in your project:
+   - `index.html` (Login page)
+   - `data.html` (Data management page)
+   - `styles.css` (Styles)
+   - `script.js` (Login functionality)
+   - `data.js` (Data management functionality)
 
-2. Deploy the Google Apps Script as a web app:
-   - Set "Execute as" to "Me"
-   - Set "Who has access" to "Anyone"
-   - Deploy and copy the web app URL
+## Deployment
 
-3. Update the web app URL in `script.js`
+### GitHub Setup
 
-## Security Considerations
+1. Create a new repository on GitHub
+2. Initialize git in your project:
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/yourusername/apartment-portal.git
+git push -u origin main
+```
 
-- OTPs expire after 10 minutes
-- Data filtering occurs server-side
-- HTTPS encryption by default
-- Rate limiting on OTP requests
+### Netlify Deployment
 
-## File Structure
+1. Go to [Netlify](https://www.netlify.com/) and sign up/login
+2. Click "New site from Git"
+3. Choose GitHub and select your repository
+4. Configure the build settings:
+   - Build command: (leave empty)
+   - Publish directory: . (dot)
+5. Click "Deploy site"
 
-- `index.html`: Main login page
-- `styles.css`: Styling for the portal
-- `script.js`: Client-side JavaScript
-- `Code.gs`: Google Apps Script backend code
+## Environment Variables
 
-## Usage
+If you need to use environment variables (e.g., for API keys), you can set them in Netlify:
 
-1. Navigate to the portal URL
-2. Enter your authorized email address
-3. Click "Send OTP"
-4. Check your email for the OTP
-5. Enter the OTP to view your complex's member data
+1. Go to Site settings > Build & deploy > Environment
+2. Add your environment variables
+
+## Custom Domain
+
+To add a custom domain:
+
+1. Go to Site settings > Domain management
+2. Click "Add custom domain"
+3. Follow the instructions to configure your domain
 
 ## Support
 
-For technical support or questions, please contact the system administrator. 
+For any issues or questions, please open an issue in the GitHub repository. 
