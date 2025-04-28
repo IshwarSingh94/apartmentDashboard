@@ -10,114 +10,199 @@
 </head>
 <body>
     <div class="container">
-        <div class="login-container">
-            <div class="company-logo">
-                <img src="2.png" alt="Company Logo" class="logo-image">
-            </div>
-            <div class="login-form">
-                <div id="email-section">
-                    <h2>Welcome Back</h2>
-                    <p class="subtitle">Enter your email to continue</p>
-                    <div class="input-group">
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="email" placeholder="Enter your authorized email" required>
-                        </div>
-                        <button id="send-otp" class="btn primary">
-                            <span class="button-text">Send OTP</span>
-                            <div class="loading-spinner" style="display: none;">
-                                <i class="fas fa-circle-notch fa-spin"></i>
+        <main id="login-section-main" class="main-content">
+            <div class="login-container">
+                <div class="company-logo">
+                    <img src="2.png" alt="Company Logo" class="logo-image">
+                </div>
+                <div class="login-form">
+                    <div id="email-section">
+                        <h2>Welcome Back</h2>
+                        <p class="subtitle">Enter your email to continue</p>
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="Enter your authorized email" required>
                             </div>
+                            <button id="send-otp" class="btn primary">
+                                <span class="button-text">Send OTP</span>
+                                <div class="loading-spinner" style="display: none;">
+                                    <i class="fas fa-circle-notch fa-spin"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="otp-section" style="display: none;">
+                        <h2>Enter OTP</h2>
+                        <p class="otp-info">Please check your email for the OTP</p>
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-key"></i>
+                                <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
+                            </div>
+                            <button id="verify-otp" class="btn primary">
+                                <span class="button-text">Verify OTP</span>
+                                <div class="loading-spinner" style="display: none;">
+                                    <i class="fas fa-circle-notch fa-spin"></i>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="resend-otp">
+                            <p>Didn't receive the OTP?</p>
+                            <button id="resend-otp" class="btn text" disabled>
+                                Resend OTP <span id="resend-timer">(30s)</span>
+                            </button>
+                        </div>
+                        <button id="back-to-email" class="btn secondary">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Email
                         </button>
                     </div>
                 </div>
-                
-                <div id="otp-section" style="display: none;">
-                    <h2>Enter OTP</h2>
-                    <p class="otp-info">Please check your email for the OTP</p>
-                    <div class="input-group">
-                        <div class="input-wrapper">
-                            <i class="fas fa-key"></i>
-                            <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
-                        </div>
-                        <button id="verify-otp" class="btn primary">
-                            <span class="button-text">Verify OTP</span>
-                            <div class="loading-spinner" style="display: none;">
-                                <i class="fas fa-circle-notch fa-spin"></i>
+            </div>
+         </main>
+
+        <main id="data-section-main" class="main-content" style="display: none;">
+             <div id="data-container">
+                <nav class="controls-bar"> {/* Renamed from navbar for clarity */}
+                    <div class="nav-left">
+                        <div class="filter-controls">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" placeholder="Search by name or plan...">
                             </div>
-                        </button>
+                            <div class="date-filter">
+                                <div class="date-input-group">
+                                    <label for="start-date">From</label>
+                                    <input type="date" id="start-date" placeholder="Start Date">
+                                </div>
+                                <div class="date-input-group">
+                                    <label for="end-date">To</label>
+                                    <input type="date" id="end-date" placeholder="End Date">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="resend-otp">
-                        <p>Didn't receive the OTP?</p>
-                        <button id="resend-otp" class="btn text" disabled>
-                            Resend OTP <span id="resend-timer">(30s)</span>
-                        </button>
-                    </div>
-                    <button id="back-to-email" class="btn secondary">
-                        <i class="fas fa-arrow-left"></i>
-                        Back to Email
+                    <button id="logout" class="btn secondary">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </nav>
+                <div class="table-container">
+                    <table id="member-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Member Name <i class="fas fa-sort sort-icon"></i></th>
+                                <th data-sort="plan">Plan <i class="fas fa-sort sort-icon"></i></th>
+                                <th data-sort="purchaseDate">Purchase Date <i class="fas fa-sort sort-icon"></i></th>
+                                <th data-sort="startDate">Start Date <i class="fas fa-sort sort-icon"></i></th>
+                                <th data-sort="endDate">End Date <i class="fas fa-sort sort-icon"></i></th>
+                                <th data-sort="amountPaid">Amount Paid <i class="fas fa-sort sort-icon"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="member-data">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button id="prev-page" class="btn secondary">
+                        <i class="fas fa-chevron-left"></i>
+                        Previous
+                    </button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" class="btn secondary">
+                        Next
+                        <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
             </div>
-        </div>
-
-        <div id="data-container" style="display: none;">
-            <nav class="navbar">
-                <div class="nav-left">
-                    <div class="filter-controls">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" placeholder="Search by name or plan...">
-                        </div>
-                        <div class="date-filter">
-                            <div class="date-input-group">
-                                <label for="start-date">From</label>
-                                <input type="date" id="start-date" placeholder="Start Date">
-                            </div>
-                            <div class="date-input-group">
-                                <label for="end-date">To</label>
-                                <input type="date" id="end-date" placeholder="End Date">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button id="logout" class="btn secondary">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </nav>
-            <div class="table-container">
-                <table id="member-table">
-                    <thead>
-                        <tr>
-                            <th data-sort="name">Member Name <i class="fas fa-sort"></i></th>
-                            <th data-sort="plan">Plan <i class="fas fa-sort"></i></th>
-                            <th data-sort="purchaseDate">Purchase Date <i class="fas fa-sort"></i></th>
-                            <th data-sort="startDate">Start Date <i class="fas fa-sort"></i></th>
-                            <th data-sort="endDate">End Date <i class="fas fa-sort"></i></th>
-                            <th data-sort="amountPaid">Amount Paid <i class="fas fa-sort"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody id="member-data">
-                        <!-- Data will be populated here -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="pagination">
-                <button id="prev-page" class="btn secondary">
-                    <i class="fas fa-chevron-left"></i>
-                    Previous
-                </button>
-                <span id="page-info">Page 1 of 1</span>
-                <button id="next-page" class="btn secondary">
-                    Next
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
+        </main>
 
         <div id="error-message" class="error-message" style="display: none;"></div>
     </div>
     <script src="script.js"></script>
+     <script>
+        // Simple script to toggle main sections - adjust as needed based on your login flow
+        function showLogin() {
+            document.getElementById('login-section-main').style.display = 'block';
+            document.getElementById('data-section-main').style.display = 'none';
+             // Call your existing function to show the email section within login
+            if (typeof showEmailSection === 'function') showEmailSection();
+        }
+
+        function showData() {
+            document.getElementById('login-section-main').style.display = 'none';
+            document.getElementById('data-section-main').style.display = 'block';
+             // Call your existing function to show the data container
+            if (typeof showDataContainer === 'function') showDataContainer();
+        }
+
+        // Link these functions to your existing login/logout logic
+        // Example: Call showData() after successful OTP verification
+        // Example: Call showLogin() on logout
+        // Ensure your existing showEmailSection, showOtpSection, showDataContainer
+        // functions in script.js still work correctly with this structure.
+        // You might need to adjust those functions slightly if they relied
+        // on hiding/showing the parent #data-container directly.
+
+        // Initial state (show login)
+        document.addEventListener('DOMContentLoaded', showLogin);
+
+        // --- Adjust your existing JS functions ---
+        // Find showEmailSection, showOtpSection, showDataContainer in script.js
+        // Modify them to work with the new <main> tags if necessary.
+        // Example adjustments (adapt as needed):
+
+        /*
+        function showEmailSection() {
+            // Assuming login-section-main is visible
+            document.getElementById('email-section').style.display = 'block';
+            document.getElementById('otp-section').style.display = 'none';
+            // No longer need to hide dataContainer here as the whole main section is hidden
+            otpInput.value = '';
+        }
+
+        function showOtpSection() {
+             // Assuming login-section-main is visible
+            document.getElementById('email-section').style.display = 'none';
+            document.getElementById('otp-section').style.display = 'block';
+             // No longer need to hide dataContainer here
+        }
+
+        // Modify handleVerifyOtp success path:
+        // Inside the success callback of handleVerifyOtp:
+        // ...
+        // allMembers = response.members;
+        // showData(); // Call the new function to switch main sections
+        // displayMemberData(); // This will populate the table within the now visible data section
+        // hideError();
+        // stopResendTimer();
+        // ...
+
+
+        // Modify handleLogout:
+        function handleLogout() {
+            showLogin(); // Call the new function to switch main sections
+            emailInput.value = '';
+            otpInput.value = '';
+            hideError();
+            allMembers = [];
+            currentPage = 1;
+            currentSort = { column: 'name', direction: 'asc' };
+            searchInput.value = '';
+            startDateInput.value = '';
+            endDateInput.value = '';
+             // Reset sort icons if needed
+            document.querySelectorAll('th .sort-icon').forEach(icon => {
+                 icon.className = 'fas fa-sort sort-icon';
+            });
+        }
+
+        // Ensure the functions referenced in the HTML (handleSendOtp, handleVerifyOtp, etc.)
+        // correctly show/hide the email/otp sections *within* the login main section.
+        */
+
+     </script>
 </body>
-</html> 
+</html>
