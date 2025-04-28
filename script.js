@@ -1,5 +1,3 @@
-JS
-
 // Configuration
 const API_URL = 'https://script.google.com/macros/s/AKfycbzJMysocGG1-9wh4GtRsnUWjKLWtPNpd921TxoYWYz7U0J6hCKwx6hWveQgFTJJEsOGaA/exec';
 const ITEMS_PER_PAGE = 10;
