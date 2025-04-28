@@ -1,38 +1,53 @@
 // Configuration
-const SPREADSHEET_ID = 'YOUR_SPREADSHEET_ID'; // Replace with your Google Sheet ID
+const SPREADSHEET_ID = '1w7m3wPDdxB2xWonPYaAtHm-YWEXsaH-WYg116bx_mk8'; // Replace with your Google Sheet ID
 const MEMBER_SHEET_NAME = 'Member Data';
 const PARTNER_SHEET_NAME = 'Partner Access';
 const OTP_EXPIRY_MINUTES = 10;
+const ALLOWED_ORIGINS = ['https://b2bpartner.netlify.app', 'http://localhost:3000']; // Add your domains
 
 // Main doGet function to serve the web app
-function doGet() {
-  return HtmlService.createHtmlOutputFromFile('index')
-    .setTitle('Apartment Portal')
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
-}
-
-// Handle POST requests
-function doPost(e) {
+function doGet(e) {
   const action = e.parameter.action;
-  const data = JSON.parse(e.postData.contents);
+  const callback = e.parameter.callback;
   
+  if (!action) {
+    return HtmlService.createHtmlOutputFromFile('index')
+      .setTitle('Apartment Portal')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  
+  let result;
   switch(action) {
     case 'sendOtp':
-      return handleSendOtp(data);
+      result = handleSendOtpGet(e.parameter);
+      break;
     case 'verifyOtp':
-      return handleVerifyOtp(data);
+      result = handleVerifyOtpGet(e.parameter);
+      break;
     default:
-      return createErrorResponse('Invalid action');
+      result = { status: 'error', message: 'Invalid action' };
   }
+  
+  if (callback) {
+    return ContentService.createTextOutput(callback + '(' + JSON.stringify(result) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
-// Generate and send OTP
-function handleSendOtp(data) {
-  const email = data.email;
+// Handle send OTP via GET
+function handleSendOtpGet(params) {
+  const email = params.email;
+  
+  if (!email) {
+    return { status: 'error', message: 'Email is required' };
+  }
   
   // Check if email is authorized
   if (!isAuthorizedEmail(email)) {
-    return createErrorResponse('Email not authorized');
+    return { status: 'error', message: 'Email not authorized' };
   }
   
   // Generate OTP
@@ -50,24 +65,28 @@ function handleSendOtp(data) {
       body: `Your OTP is: ${otp}\n\nThis OTP will expire in ${OTP_EXPIRY_MINUTES} minutes.`
     });
     
-    return createSuccessResponse('OTP sent successfully');
+    return { status: 'success', message: 'OTP sent successfully' };
   } catch (error) {
     console.error('Error sending email:', error);
-    return createErrorResponse('Failed to send OTP');
+    return { status: 'error', message: 'Failed to send OTP' };
   }
 }
 
-// Verify OTP and return member data
-function handleVerifyOtp(data) {
-  const email = data.email;
-  const otp = data.otp;
+// Handle verify OTP via GET
+function handleVerifyOtpGet(params) {
+  const email = params.email;
+  const otp = params.otp;
+  
+  if (!email || !otp) {
+    return { status: 'error', message: 'Email and OTP are required' };
+  }
   
   // Get stored OTP
   const cache = CacheService.getScriptCache();
   const storedOtp = cache.get(email);
   
   if (!storedOtp || storedOtp !== otp) {
-    return createErrorResponse('Invalid or expired OTP');
+    return { status: 'error', message: 'Invalid or expired OTP' };
   }
   
   // Clear OTP from cache
@@ -76,7 +95,11 @@ function handleVerifyOtp(data) {
   // Get member data for the partner's complex
   const members = getMemberDataForPartner(email);
   
-  return createSuccessResponse('OTP verified successfully', { members });
+  return { 
+    status: 'success', 
+    message: 'OTP verified successfully',
+    members: members
+  };
 }
 
 // Check if email is authorized
@@ -124,7 +147,7 @@ function getMemberDataForPartner(email) {
     if (memberData[i][6] === complexName) { // Assuming complex name is in seventh column
       members.push({
         name: memberData[i][0],
-        email: memberData[i][1],
+        plan: memberData[i][1],
         purchaseDate: memberData[i][2],
         startDate: memberData[i][3],
         endDate: memberData[i][4],
@@ -142,18 +165,22 @@ function generateOTP() {
 }
 
 // Create success response
-function createSuccessResponse(message, data = {}) {
+function createSuccessResponse(message, data = {}, headers = {}) {
   return ContentService.createTextOutput(JSON.stringify({
     status: 'success',
     message: message,
     ...data
-  })).setMimeType(ContentService.MimeType.JSON);
+  }))
+  .setMimeType(ContentService.MimeType.JSON)
+  .setHeaders(headers);
 }
 
 // Create error response
-function createErrorResponse(message) {
+function createErrorResponse(message, headers = {}) {
   return ContentService.createTextOutput(JSON.stringify({
     status: 'error',
     message: message
-  })).setMimeType(ContentService.MimeType.JSON);
+  }))
+  .setMimeType(ContentService.MimeType.JSON)
+  .setHeaders(headers);
 } 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment Portal - Member Data</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="filter-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search by name or plan...">
+                    </div>
+                    <div class="date-filter">
+                        <div class="date-input-group">
+                            <label for="start-date">From</label>
+                            <input type="date" id="start-date" placeholder="Start Date">
+                        </div>
+                        <div class="date-input-group">
+                            <label for="end-date">To</label>
+                            <input type="date" id="end-date" placeholder="End Date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button id="logout" class="btn secondary">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </nav>
+        <div class="table-container">
+            <table id="member-table">
+                <thead>
+                    <tr>
+                        <th data-sort="name">Member Name <i class="fas fa-sort"></i></th>
+                        <th data-sort="plan">Plan <i class="fas fa-sort"></i></th>
+                        <th data-sort="purchaseDate">Purchase Date <i class="fas fa-sort"></i></th>
+                        <th data-sort="startDate">Start Date <i class="fas fa-sort"></i></th>
+                        <th data-sort="endDate">End Date <i class="fas fa-sort"></i></th>
+                        <th data-sort="amountPaid">Amount Paid <i class="fas fa-sort"></i></th>
+                    </tr>
+                </thead>
+                <tbody id="member-data">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            <button id="prev-page" class="btn secondary">
+                <i class="fas fa-chevron-left"></i>
+                Previous
+            </button>
+            <span id="page-info">Page 1 of 1</span>
+            <button id="next-page" class="btn secondary">
+                Next
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <script src="data.js"></script>
+</body>
+</html> 
