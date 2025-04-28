@@ -67,28 +67,31 @@
         <main id="data-section-main" class="main-content" style="display: none;">
              <div id="data-container">
                 <nav class="controls-bar">
-                    <div class="nav-left">
-                        <div class="filter-controls">
-                            <div class="search-box">
-                                <i class="fas fa-search"></i>
-                                <input type="text" id="search-input" placeholder="Search by name or plan...">
+                    <div class="controls-top-row">
+                        <div class="controls-logo">
+                            <h3>Apartment Portal</h3>
+                        </div>
+                        <button id="logout" class="btn secondary">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                    <div class="filter-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search by name or plan...">
+                        </div>
+                        <div class="date-filter">
+                            <div class="date-input-group">
+                                <label for="start-date">Purchase From</label>
+                                <input type="date" id="start-date">
                             </div>
-                            <div class="date-filter">
-                                <div class="date-input-group">
-                                    <label for="start-date">Purchase From</label>
-                                    <input type="date" id="start-date">
-                                </div>
-                                <div class="date-input-group">
-                                    <label for="end-date">Purchase To</label>
-                                    <input type="date" id="end-date">
-                                </div>
+                            <div class="date-input-group">
+                                <label for="end-date">Purchase To</label>
+                                <input type="date" id="end-date">
                             </div>
                         </div>
                     </div>
-                    <button id="logout" class="btn secondary">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Logout
-                    </button>
                 </nav>
                  <div id="data-error-message" class="error-message" style="display: none; margin-bottom: 1rem;"></div>
                 <div class="table-container">
@@ -106,7 +109,7 @@
                         <tbody id="member-data">
                             </tbody>
                     </table>
-                     <div id="no-results-message" style="display: none; text-align: center; padding: 2rem; color: var(--text-secondary);">No members found matching your criteria.</div>
+                     <div id="no-results-message" style="display: none;">No members found matching your criteria.</div>
                 </div>
                 <div class="pagination">
                     <button id="prev-page" class="btn secondary" disabled>
