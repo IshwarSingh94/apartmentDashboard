@@ -1,4 +1,4 @@
-/* styles.css - Modernized and Fixed */
+/* styles.css - Refined */
 
 :root {
     /* Colors */
@@ -13,6 +13,7 @@
     --border-color: #D1D5DB; /* Slightly darker border for definition */
     --background-color: #F9FAFB;
     --card-background: #FFFFFF;
+    --sort-icon-active: var(--primary-color); /* Color for active sort icon */
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -48,6 +49,12 @@ body {
     margin: 2rem auto; /* Add margin for spacing */
 }
 
+/* Main content switching */
+.main-content {
+    animation: fadeIn 0.3s ease-out;
+}
+
+
 /* Login Container Styles */
 .login-container {
     background-color: var(--card-background);
@@ -57,7 +64,6 @@ body {
     max-width: 450px; /* Slightly narrower */
     margin: 4rem auto; /* More margin top */
     text-align: center;
-    animation: fadeIn 0.3s ease-out;
 }
 
 .company-logo {
@@ -250,34 +256,42 @@ input:focus {
 }
 
 /* Data Container Styles */
-.data-container {
+#data-container { /* Changed from .data-container to be more specific */
     background-color: var(--card-background);
     padding: 2rem; /* Use rem */
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md); /* Softer shadow */
-    margin-top: 2rem;
-    animation: fadeIn 0.3s ease-out;
-    height: calc(100vh - 2rem);
+    margin-top: 0; /* No margin needed if switching <main> tags */
+    /* REMOVED: height: calc(100vh - 2rem); */
+    /* Let the container grow naturally */
     display: flex;
     flex-direction: column;
+    min-height: 500px; /* Optional: ensure a minimum height */
 }
 
-/* Header Styles (Fixed) */
-.header {
+/* Controls Bar Styles (Formerly Navbar) */
+.controls-bar { /* Renamed from .navbar */
     display: flex;
     flex-wrap: wrap; /* Allow wrapping */
     justify-content: space-between;
     align-items: center; /* Vertically center items */
-    margin-bottom: 1.5rem;
-    gap: 1.5rem; /* Gap between items */
     padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--border-color);
+    gap: 1rem; /* Consistent gap */
+    position: sticky; /* Keep controls sticky */
+    top: 0;
+    background-color: var(--card-background); /* Add background for sticky */
+    z-index: 10; /* Ensure it's above table content */
 }
 
-.header-left {
+.nav-left { /* Keep class name for simplicity, though it's part of controls-bar */
     flex: 1 1 auto; /* Allow growing and shrinking */
     min-width: 0; /* Prevent overflow */
+    display: flex; /* Ensure filter controls are inside */
+    align-items: center;
 }
+
 
 .filter-controls {
     display: flex;
@@ -337,15 +351,20 @@ input:focus {
 #logout.btn {
     flex: 0 0 auto; /* Don't grow, don't shrink */
     width: auto; /* Size based on content */
+    padding: 0.75rem 1.25rem; /* Slightly adjusted padding to match inputs */
+    font-size: 0.95rem;
 }
 
 /* Table Styles */
 .table-container {
-    flex: 1;
-    overflow: auto;
+    flex: 1; /* Allows table container to fill space */
+    overflow: auto; /* Handles both vertical/horizontal scroll */
     margin: 0;
     border: none;
     border-radius: 0;
+    /* Optional: Add border if needed */
+    /* border: 1px solid var(--border-color); */
+    /* border-top: none; */
 }
 
 table {
@@ -371,17 +390,27 @@ th {
     letter-spacing: 0.05em;
     cursor: pointer;
     user-select: none;
+    position: sticky; /* Make headers sticky within table-container */
+    top: 0; /* Stick to the top of the container */
+    z-index: 1; /* Ensure header is above table body rows */
 }
 
-th i {
+th .sort-icon { /* Target the specific sort icon class */
     margin-left: 0.5rem;
     color: var(--text-secondary);
     opacity: 0.6;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, color 0.2s; /* Added color transition */
 }
-th:hover i {
+th:hover .sort-icon {
     opacity: 1;
 }
+
+/* Style for active sort column header */
+th.sort-active .sort-icon {
+    opacity: 1;
+    color: var(--sort-icon-active); /* Use the primary color for active sort */
+}
+
 
 tbody tr {
     transition: background-color 0.15s ease-in-out;
@@ -429,11 +458,13 @@ td {
     color: #B91C1C; /* Darker red text */
     padding: 1rem;
     border-radius: var(--border-radius-md);
-    margin-top: 1.5rem;
+    margin: 1.5rem auto 0 auto; /* Center horizontally, add top margin */
     text-align: center;
     display: none; /* Hidden by default */
     font-weight: 500;
     border: 1px solid #FCA5A5; /* Red border */
+    max-width: 90%; /* Prevent it from being too wide */
+    animation: fadeIn 0.3s ease-out;
 }
 
 /* Animation */
@@ -455,8 +486,12 @@ td {
     .container {
         padding: 1.5rem;
     }
-    .filter-controls {
-        /* Already allows wrapping, adjustments might be needed based on content */
+    .controls-bar { /* Adjust controls bar padding */
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    th, td {
+        padding: 0.875rem;
     }
 }
 
@@ -467,6 +502,10 @@ td {
     }
     .container {
         padding: 1rem;
+         margin: 1rem auto; /* Reduce vertical margin */
+    }
+     #data-container {
+        padding: 1.5rem;
     }
 
     .login-container {
@@ -474,13 +513,14 @@ td {
         margin: 2rem auto;
     }
 
-    /* Header stacking */
-    .header {
+    /* Controls bar stacking */
+    .controls-bar {
         flex-direction: column;
         align-items: stretch;
+        position: static; /* Disable sticky header on small screens */
     }
 
-    .header-left {
+    .nav-left {
         width: 100%;
     }
 
@@ -515,6 +555,10 @@ td {
         font-size: 0.85em; /* Smaller font */
         white-space: normal; /* Allow text wrapping */
     }
+     th {
+        position: static; /* Disable sticky headers */
+    }
+
 
      /* Pagination stacking */
     .pagination {
@@ -530,39 +574,7 @@ td {
        margin-bottom: 0.5rem;
     }
 
-    /* Navigation Bar adjustments */
-    .navbar {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0.75rem;
-    }
-
-    .nav-left {
-        width: 100%;
-    }
-
-    .filter-controls {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .search-box {
-        max-width: none;
-        width: 100%;
-    }
-
-    .date-filter {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .date-input-group {
-        flex: 1;
-    }
-
-    #logout.btn {
-        width: 100%;
-    }
+    /* Removed duplicate/conflicting .navbar rules */
 }
 
 /* Extra Small Screens (Phones) */
@@ -572,6 +584,10 @@ td {
     }
      .container {
         padding: 0.75rem;
+         margin: 0.75rem auto;
+    }
+     #data-container {
+        padding: 1rem;
     }
     .login-container {
         padding: 1rem;
@@ -597,101 +613,11 @@ td {
      th, td {
         padding: 0.6rem;
     }
-
-    /* Navigation Bar adjustments */
-    .navbar {
-        padding: 0.5rem;
+     #logout.btn {
+        font-size: 0.9rem; /* Match other small screen adjustments */
     }
-
-    .date-filter {
-        flex-direction: column;
-        gap: 0.5rem;
+    .pagination {
+        padding-top: 1rem;
+        margin-top: 1rem;
     }
-
-    .date-input-group {
-        width: 100%;
-    }
-}
-
-/* Navigation Bar Styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: var(--card-background);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow-sm);
-}
-
-.nav-left {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-
-.filter-controls {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-}
-
-.search-box {
-    position: relative;
-    flex: 1;
-    max-width: 300px;
-}
-
-.search-box i {
-    position: absolute;
-    left: 0.875rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    font-size: 0.9em;
-}
-
-.search-box input {
-    padding: 0.5rem 1rem 0.5rem 2.5rem;
-    width: 100%;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    font-size: 0.95rem;
-}
-
-.date-filter {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-.date-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.date-input-group label {
-    font-size: 0.75em;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.date-input-group input {
-    padding: 0.5rem;
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--border-color);
-    font-size: 0.9rem;
-}
-
-#logout.btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    white-space: nowrap;
 }
